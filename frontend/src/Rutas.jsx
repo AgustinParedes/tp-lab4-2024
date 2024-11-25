@@ -11,6 +11,9 @@ import AdminPanelSettingsSharpIcon from '@mui/icons-material/AdminPanelSettingsS
 import AcercaDe from "../src/pages/AcercaDe";
 import fondolibro5 from "../public/img/fondolibro5.jpg"
 
+import VentasForm from "./componentes/ventas/VentasForm.jsx";
+import ReporteVentas from "./componentes/ventas/ReporteVentas.jsx";
+
 const hideNavList = [
     {
         path: "reportes",
@@ -23,7 +26,7 @@ const hideNavList = [
         tittle: "Proveedores",
     },
     {
-        path: "vender",
+        path: "/ventas/nueva",
         icon: <AdminPanelSettingsSharpIcon/>,
         tittle: "Vender",
     },
@@ -74,6 +77,9 @@ const Rutas = () => {
                             <Route path="/home" element={<Home />} />
                             <Route path="/acerca de" element={<AcercaDe />} />
                             <Route path="/*" element={<Default />} />
+
+                            <Route path="/ventas/nueva" element={<VentasForm />} /> 
+                            <Route path="/ventas/reporte" element={<ReporteVentas />} />
 
                         </Route>
                     </Routes>

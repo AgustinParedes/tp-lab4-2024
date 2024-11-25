@@ -12,8 +12,7 @@ import Rutas from "./Rutas.jsx";
 
 
 
-createRoot
-(document.getElementById("root")).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider theme={Theme}>
       <BrowserRouter>

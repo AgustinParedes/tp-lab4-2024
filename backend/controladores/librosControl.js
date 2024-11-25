@@ -26,6 +26,23 @@ const reporteVenta = async (req, res) => {
   res.send({ reportes: reporte[0] });
 };
 
+// const reporteVenta = async (req, res) => {
+//   const fecha_i = req.query.fecha_i;
+//   const fecha_f = req.query.fecha_f;
+
+//   try {
+//     const reporte = await bookModel.generarReporteVentas(fecha_i, fecha_f);
+
+//     res.send({
+//       reportes: reporte[0],
+//       fecha_inicio: fecha_i,
+//       fecha_fin: fecha_f,
+//     });
+//   } catch (error) {
+//     res.status(500).send({ error: "Error al generar el reporte de ventas" });
+//   }
+// };
+
 const controlStock = async (req, res) => {
   const cantidad = req.query.cantidad;
   const control = await bookModel.calculoControlStock(cantidad);

@@ -16,7 +16,8 @@ Router.post("/nueva-venta", bookControl.nuevaVenta);
 Router.post("/login-empleados", login);
 Router.get("/empleados", userControl.empleadosActivos);
 Router.get("/empleado/:id", userControl.empleadosPorID);
-Router.post("/nuevo-empelado", userControl.crearEmpleado);
+Router.post("/nuevo-empleado", userControl.crearEmpleado); // Corregido, antes decia 'empelado'
+
 Router.put("/recontratacion-empleado/:empleado_id", userControl.volverContrato);
 Router.put("/editar-empleado/:empleado_id", userControl.editarEmpleado);
 Router.delete("/despedir-empleado/:empleado_id", userControl.despedirEmpleado);
