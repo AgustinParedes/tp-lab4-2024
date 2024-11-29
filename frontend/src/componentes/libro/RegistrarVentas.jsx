@@ -4,53 +4,36 @@ import { useAuth } from "../../Auth";
 const RegistrarVenta = () => {
   const [empleadoId, setEmpleadoId] = useState("");
   const [clienteId, setClienteId] = useState("");
-  const [libros, setLibros] = useState([]);
   const [libroId, setLibroId] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [mensaje, setMensaje] = useState("");
 
-  const { sesion } = useAuth();
-
-  const handleAgregarLibro = () => {
-    if (libroId && cantidad > 0) {
-      setLibros([...libros, { libro_id: parseInt(libroId), cantidad: parseInt(cantidad) }]);
-      setLibroId("");
-      setCantidad("");
-    } else {
-      setMensaje("Por favor, ingresa un libro y cantidad válida.");
-    }
-  };
-
-  const handleEliminarLibro = (index) => {
-    setLibros(libros.filter((_, i) => i !== index));
-  };
+  const {sesion} = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
+    
     const ventaData = {
-      empleado_id: parseInt(empleadoId),
-      cliente_id: parseInt(clienteId),
-      libros: libros,
+      empleado_id: empleadoId,
+      cliente_id: clienteId,
+      libro_id: libroId,
+      cantidad: cantidad,
     };
 
     try {
       const response = await fetch("http://localhost:3000/api/v1/ventas", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${sesion.token}`,
+          Authetication :`Bearer ${sesion.token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(ventaData),
       });
 
       const data = await response.json();
-
       if (response.ok) {
         setMensaje(`Venta registrada con éxito! ID de venta: ${data.venta_id}`);
-        setEmpleadoId("");
-        setClienteId("");
-        setLibros([]);
       } else {
         setMensaje(`Error: ${data.message}`);
       }
@@ -61,8 +44,8 @@ const RegistrarVenta = () => {
   };
 
   return (
-    <div style={{ borderStyle: "inset", padding: "20px" }}>
-      <h2>Registrar Venta</h2>
+    <div>
+      <h1>Registrar Venta</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Empleado ID</label>
@@ -82,14 +65,13 @@ const RegistrarVenta = () => {
             required
           />
         </div>
-        <hr />
-        <h3>Agregar Libros</h3>
         <div>
           <label>Libro ID</label>
           <input
             type="number"
             value={libroId}
             onChange={(e) => setLibroId(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -98,28 +80,15 @@ const RegistrarVenta = () => {
             type="number"
             value={cantidad}
             onChange={(e) => setCantidad(e.target.value)}
+            required
           />
         </div>
-        <button type="button" onClick={handleAgregarLibro}>
-          Agregar Libro
-        </button>
-        <hr />
-        <h3>Libros Agregados</h3>
-        <ul>
-          {libros.map((libro, index) => (
-            <li key={index}>
-              Libro ID: {libro.libro_id}, Cantidad: {libro.cantidad}{" "}
-              <button type="button" onClick={() => handleEliminarLibro(index)}>
-                Eliminar
-              </button>
-            </li>
-          ))}
-        </ul>
         <button type="submit">Registrar Venta</button>
       </form>
+
       {mensaje && <p>{mensaje}</p>}
     </div>
   );
 };
 
-export default RegistrarVenta;
+export default RegistrarVenta

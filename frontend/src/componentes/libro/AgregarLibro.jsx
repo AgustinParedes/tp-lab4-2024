@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import {useAuth} from  "../../Auth"
+import { useState } from "react";
+import { useAuth } from "../../Auth";
 import { Button } from "@mui/material";
 
-const AgregarLibro = ({actualizarLibros}) => {
+const AgregarLibro = ({ actualizarLibros }) => {
+  const { sesion } = useAuth();
 
-  const {sesion} = useAuth()
-  
   const [formulario, setFormulario] = useState({
-    titulo: "", 
+    titulo: "",
     isbn: "",
     genero_nombre: "",
     autor_nombre: "",
@@ -30,7 +29,7 @@ const AgregarLibro = ({actualizarLibros}) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-           Authorization: `Bearer ${sesion.token}` ,
+          Authorization: `Bearer ${sesion.token}`,
         },
         body: JSON.stringify(formulario),
       });
@@ -38,7 +37,7 @@ const AgregarLibro = ({actualizarLibros}) => {
       if (response.ok) {
         const data = await response.json();
         alert("Libro agregado con éxito: " + JSON.stringify(data));
-        actualizarLibros()
+        actualizarLibros();
       } else {
         alert("Error al agregar el libro.");
       }
@@ -48,92 +47,85 @@ const AgregarLibro = ({actualizarLibros}) => {
   };
 
   return (
-    <form style={{backgroundColor: "#d8cdc4", justifyContent:"center"}} onSubmit={handleSubmit}>
-    <div>
-      <input
-        type="text"
-        name="titulo"
-        placeholder="Título"
-        value={formulario.titulo}
-        onChange={handleChange}
-        required
-      />
-      
-      <input
-        type="number"
-        name="isbn"
-        placeholder="Isbn"
-        value={formulario.isbn}
-        onChange={handleChange}
-        required
-      />
-      
-      <input
-        type="text"
-        name="genero_nombre"
-        placeholder="Género"
-        value={formulario.genero_nombre}
-        onChange={handleChange}
-        required
-      />
-      </div> 
-      <div>
-      <input
-        type="text"
-        name="autor_nombre"
-        placeholder="Autor"
-        value={formulario.autor_nombre}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="editorial_nombre"
-        placeholder="Editorial"
-        value={formulario.editorial_nombre}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="number"
-        name="año"
-        placeholder="Año"
-        value={formulario.año}
-        onChange={handleChange}
-        required
-      />
-      <Button variant="contained" type="submit">Agregar Libro</Button>
-      </div>
-      <div>
-      <input
-        type="number"
-        name="stock_inicial"
-        placeholder="Stock Inicial"
-        value={formulario.stock_inicial}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="number"
-        name="precio_venta"
-        placeholder="Precio Venta"
-        step="0.01"
-        value={formulario.precio_venta}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="number"
-        name="precio_alquiler"
-        placeholder="Precio Alquiler"
-        step="0.01"
-        value={formulario.precio_alquiler}
-        onChange={handleChange}
-        required
-      />
-      </div>
-      
-      
+    <form
+      style={{
+        backgroundColor: "#fff",
+        border: "1px solid #ddd",
+        borderRadius: "6px",
+        padding: "20px",
+        maxWidth: "600px",
+        margin: "20px auto",
+      }}
+      onSubmit={handleSubmit}
+    >
+      <h3
+        style={{
+          textAlign: "center",
+          color: "#444",
+          marginBottom: "15px",
+        }}
+      >
+        Agregar Libro
+      </h3>
+
+      {[
+        { label: "Título", name: "titulo", type: "text" },
+        { label: "ISBN", name: "isbn", type: "number" },
+        { label: "Género", name: "genero_nombre", type: "text" },
+        { label: "Autor", name: "autor_nombre", type: "text" },
+        { label: "Editorial", name: "editorial_nombre", type: "text" },
+        { label: "Año", name: "año", type: "number" },
+        { label: "Stock Inicial", name: "stock_inicial", type: "number" },
+        { label: "Precio Venta", name: "precio_venta", type: "number" },
+        { label: "Precio Alquiler", name: "precio_alquiler", type: "number" },
+      ].map(({ label, name, type }, index) => (
+        <div key={index} style={{ marginBottom: "20px" }}>
+          <label
+            htmlFor={name}
+            style={{
+              display: "block",
+              fontWeight: "500",
+              fontSize: "14px",
+              color: "#555",
+              marginBottom: "6px",
+            }}
+          >
+            {label}
+          </label>
+          <input
+            type={type}
+            name={name}
+            id={name}
+            placeholder={`Ingrese ${label.toLowerCase()}`}
+            value={formulario[name]}
+            onChange={handleChange}
+            style={{
+              width: "100%",
+              padding: "10px 12px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              fontSize: "14px",
+              boxShadow: "inset 0 1px 3px rgba(0, 0, 0, 0.1)",
+            }}
+            required
+          />
+        </div>
+      ))}
+
+      <Button
+        variant="contained"
+        type="submit"
+        style={{
+          width: "100%",
+          backgroundColor: "#inherit",
+          color: "#fff",
+          fontSize: "16px",
+          padding: "10px 0",
+          textTransform: "capitalize",
+        }}
+      >
+        Agregar Libro
+      </Button>
     </form>
   );
 };

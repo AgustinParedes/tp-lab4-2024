@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../Auth";
 
 const VerificarStock = () => {
   const [stock, setStock] = useState([]);
   const [mensaje, setMensaje] = useState("");
-  const {sesion} = useAuth()
-  // console.log("Es un arreglo:", Array.isArray(stock));
-  // console.log(stock)
+
   useEffect(() => {
     const fetchStock = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/stock",{
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${sesion.token}`,
-          }
-        });
+        const response = await fetch("http://localhost:3000/api/v1/stockDisponible");
+
         if (response.ok) {
           const data = await response.json();
-          setStock(data.Stock_disoponible); // Guardar los resultados del stock
+          setStock(data); // Guardar los resultados del stock
         } else {
           const data = await response.json();
           setMensaje(data.message || "Hubo un error al obtener el stock.");
@@ -31,10 +24,10 @@ const VerificarStock = () => {
 
     fetchStock(); // Llamada a la API al cargar el componente
   }, []);
-    // var stock = stock.Stock_disoponible
+
   return (
-    <div style={{ backgroundColor:"#d8cdc4"}}>
-      
+    <div>
+      <h1>Stock Disponible de Libros</h1>
       {mensaje && <p>{mensaje}</p>}
       <table>
         <thead>

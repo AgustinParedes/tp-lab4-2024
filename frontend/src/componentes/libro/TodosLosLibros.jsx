@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../Auth";
 
 const ListaLibrosActivos = () => {
   var [libritos, setLibritos] = useState([]);
   const [error, setError] = useState("");
   const {sesion} = useAuth()
-  // console.log("Libros recibidos:", libritos);
-  // console.log("Es un arreglo:", Array.isArray(libritos));
+  console.log("Libros recibidos:", libritos);
+  console.log("Es un arreglo:", Array.isArray(libritos));
 
   useEffect(() => {
     const fetchLibros = async () => {
@@ -32,43 +32,93 @@ const ListaLibrosActivos = () => {
   if (error) {
     return <p style={{ color: "red" }}>{error}</p>;
   }
-  var libritos = libritos.LIBROS || [];
+  var libritos = libritos.LIBROS || [];git 
   return (
-    <div style={{backgroundColor: "#d8cdc4"}}>
-        
-      
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>ISBN</th>
-            <th>Género</th>
-            <th>Autor</th>
-            <th>Editorial</th>
-            <th>Año</th>
-            <th>Precio Venta</th>
-            <th>Precio Alquiler</th>
-          </tr>
-        </thead>
-        <tbody>
-          {libritos.map((libro) => (
-            <tr key={libro.id}>
-              <td>{libro.id}</td>
-              <td>{libro.titulo}</td>
-              <td>{libro.isbn}</td>
-              <td>{libro.genero}</td>
-              <td>{libro.autor}</td>
-              <td>{libro.editorial}</td>
-              <td>{libro.año}</td>
-              <td>{libro.precio_venta}</td>
-              <td>{libro.precio_alquiler}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
+    <div
+  style={{
+    backgroundColor: "#d8cdc4",
+    padding: "20px",
+    borderRadius: "8px",
+    maxWidth: "1200px",
+    margin: "20px auto",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  }}
+>
+  <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>
+    Libros Activos
+  </h2>
+  <table
+    style={{
+      width: "100%",
+      borderCollapse: "collapse",
+      margin: "0 auto",
+      fontSize: "16px",
+      color: "#333",
+    }}
+  >
+    <thead>
+      <tr
+        style={{
+          backgroundColor: "#c0b4aa",
+          color: "#fff",
+          textAlign: "left",
+        }}
+      >
+        <th style={{ padding: "10px", border: "1px solid #bbb" }}>ID</th>
+        <th style={{ padding: "10px", border: "1px solid #bbb" }}>Título</th>
+        <th style={{ padding: "10px", border: "1px solid #bbb" }}>ISBN</th>
+        <th style={{ padding: "10px", border: "1px solid #bbb" }}>Género</th>
+        <th style={{ padding: "10px", border: "1px solid #bbb" }}>Autor</th>
+        <th style={{ padding: "10px", border: "1px solid #bbb" }}>Editorial</th>
+        <th style={{ padding: "10px", border: "1px solid #bbb" }}>Año</th>
+        <th style={{ padding: "10px", border: "1px solid #bbb" }}>
+          Precio Venta
+        </th>
+        <th style={{ padding: "10px", border: "1px solid #bbb" }}>
+          Precio Alquiler
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {libritos.map((libro, index) => (
+        <tr
+          key={libro.id}
+          style={{
+            backgroundColor: index % 2 === 0 ? "#f3eede" : "#e8dfd6",
+          }}
+        >
+          <td style={{ padding: "10px", border: "1px solid #bbb" }}>
+            {libro.id}
+          </td>
+          <td style={{ padding: "10px", border: "1px solid #bbb" }}>
+            {libro.titulo}
+          </td>
+          <td style={{ padding: "10px", border: "1px solid #bbb" }}>
+            {libro.isbn}
+          </td>
+          <td style={{ padding: "10px", border: "1px solid #bbb" }}>
+            {libro.genero}
+          </td>
+          <td style={{ padding: "10px", border: "1px solid #bbb" }}>
+            {libro.autor}
+          </td>
+          <td style={{ padding: "10px", border: "1px solid #bbb" }}>
+            {libro.editorial}
+          </td>
+          <td style={{ padding: "10px", border: "1px solid #bbb" }}>
+            {libro.año}
+          </td>
+          <td style={{ padding: "10px", border: "1px solid #bbb" }}>
+            {libro.precio_venta}
+          </td>
+          <td style={{ padding: "10px", border: "1px solid #bbb" }}>
+            {libro.precio_alquiler}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+  )
+}
 export default ListaLibrosActivos;
